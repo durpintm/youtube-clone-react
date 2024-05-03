@@ -43,7 +43,7 @@ export function CategoryPills({
         className="flex whitespace-nowrap gap-3 transition-transform w-[max-content]"
         style={{ transform: `translateX(-${translate}px)` }}
       >
-        {categories.map((category) => (
+        {categories.map(category => (
           <Button
             key={category}
             onClick={() => onSelect(category)}
@@ -59,6 +59,7 @@ export function CategoryPills({
           <Button
             variant="ghost"
             size="icon"
+            className="h-full aspect-square w-auto p-1.5"
             onClick={() => {
               setTranslate((translate) => {
                 const newTranslate = translate - TRANSLATE_AMOUNT;
@@ -66,7 +67,6 @@ export function CategoryPills({
                 return newTranslate;
               });
             }}
-            className="h-full aspect-square w-auto p-1.5"
           >
             <ChevronLeft />
           </Button>
@@ -80,14 +80,14 @@ export function CategoryPills({
             size="icon"
             className="h-full aspect-square w-auto p-1.5"
             onClick={() => {
-              setTranslate((translate) => {
+              setTranslate(translate => {
                 if (containerRef.current == null) {
                   return translate;
                 }
                 const newTranslate = translate + TRANSLATE_AMOUNT;
                 const edge = containerRef.current.scrollWidth;
                 const width = containerRef.current.clientWidth;
-                if (newTranslate + edge >= width) {
+                if (newTranslate + width >= edge) {
                   return edge - width;
                 }
                 return newTranslate;
