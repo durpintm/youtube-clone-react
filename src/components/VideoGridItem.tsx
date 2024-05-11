@@ -1,7 +1,14 @@
 import { formatDuration } from "../utils/formatDuration";
 import { formatTimeAgo } from "../utils/formatTimeAgo";
 import { useEffect, useRef, useState } from "react";
-console.log(import.meta.env);
+
+const { APP_GOOGLE_API_KEY, APP_YOUTUBE_VIDEOS_API } = import.meta.env;
+
+const apiUrl: string = APP_YOUTUBE_VIDEOS_API.replace(
+  "{APP_GOOGLE_API_KEY}",
+  APP_GOOGLE_API_KEY
+);
+console.log(apiUrl);
 
 type VideoGridItemProps = {
   id: string;
