@@ -43,12 +43,12 @@ export function CategoryPills({
         className="flex whitespace-nowrap gap-3 transition-transform w-[max-content]"
         style={{ transform: `translateX(-${translate}px)` }}
       >
-        {categories.map(category => (
+        {categories.map((category) => (
           <Button
             key={category}
             onClick={() => onSelect(category)}
             variant={selectedCategory === category ? "dark" : "default"}
-            className="py-1 px-3 rounded-lg whitespace-nowrap"
+            className="px-3 rounded-lg whitespace-nowrap"
           >
             {category}
           </Button>
@@ -80,7 +80,7 @@ export function CategoryPills({
             size="icon"
             className="h-full aspect-square w-auto p-1.5"
             onClick={() => {
-              setTranslate(translate => {
+              setTranslate((translate) => {
                 if (containerRef.current == null) {
                   return translate;
                 }

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useSidebarContext } from "../contexts/SidebarContext";
 
 export function PageHeader() {
-  const [showFullWidthSearch, setShowFullWidthSearch] = useState(false)
+  const [showFullWidthSearch, setShowFullWidthSearch] = useState(false);
 
   return (
     <div className="flex gap-10 lg:gap-20 justify-between pt-2 mb-6 mx-4">
@@ -67,7 +67,7 @@ export function PageHeader() {
       </div>
     </div>
   );
-};
+}
 
 type PageHeaderFirstSectionProps = {
   hidden?: boolean;
