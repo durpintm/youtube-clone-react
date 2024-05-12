@@ -1,45 +1,14 @@
-import { formatDuration } from "../utils/formatDuration";
-import { formatTimeAgo } from "../utils/formatTimeAgo";
 import { useEffect, useRef, useState } from "react";
-
-const { APP_GOOGLE_API_KEY, APP_YOUTUBE_VIDEOS_API } = import.meta.env;
-
-const apiUrl: string = APP_YOUTUBE_VIDEOS_API.replace(
-  "{APP_GOOGLE_API_KEY}",
-  APP_GOOGLE_API_KEY
-);
-console.log(apiUrl);
-
-type VideoGridItemProps = {
-  id: string;
-  title: string;
-  channel: {
-    id: string;
-    name: string;
-    profileUrl: string;
-  };
-  views: number;
-  postedAt: Date;
-  duration: number;
-  thumbnailUrl: string;
-  videoUrl: string;
-};
-
+import { formatISODuration } from "../utils/formatISODuration";
+import { VideoGridItemProps } from "../Types/VideoGridItems";
+import { formatTimeAgo } from "../utils/formatTimeAgo";
 const VIEW_FROMATTER = Intl.NumberFormat(undefined, { notation: "compact" });
 
-export function VideoGridItem({
-  id,
-  title,
-  channel,
-  views,
-  postedAt,
-  duration,
-  thumbnailUrl,
-  videoUrl,
-}: VideoGridItemProps) {
+export function VideoGridItem(video: VideoGridItemProps) {
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
+  console.log(video.snippet.publishedAt);
   useEffect(() => {
     if (videoRef.current == null) return;
     if (isVideoPlaying) {
@@ -56,40 +25,47 @@ export function VideoGridItem({
       onMouseEnter={() => setIsVideoPlaying(true)}
       onMouseLeave={() => setIsVideoPlaying(false)}
     >
-      <a href={`/watch?v=${id}`} className="relative aspect-video">
+      <a href={`/watch?v=${video.id}`} className="relative aspect-video">
         <img
-          src={thumbnailUrl}
+          src={video.snippet.thumbnails.high.url}
           className={`block w-full h-full object-cover rounded-xl [border-radius] duration-200 ${
             isVideoPlaying ? "rounded-none" : "rounded-xl"
           }`}
           alt="Video"
         />
         <div className="absolute bottom-1 right-1 bg-secondary-dark text-secondary text-sm px-0.5 rounded">
-          {formatDuration(duration)}
+          {formatISODuration(video.contentDetails.duration)}
         </div>
         <video
           ref={videoRef}
           muted
           playsInline
-          src={videoUrl}
+          src=""
           className={`block h-full object-cover absolute inset-0 transition-opacity duration-200 ${
             isVideoPlaying ? "opacity-100  delay-200" : "opacity-0"
           }`}
         ></video>
       </a>
       <div className="flex gap-2">
-        <a href={`/@${channel.id}`} className="flex-shrink-0">
-          <img className="w-12 h-12 rounded-full" src={channel.profileUrl} />
+        <a href={`/@${video.snippet.channelId}`} className="flex-shrink-0">
+          <img
+            className="w-12 h-12 rounded-full"
+            src="https://yt3.ggpht.com/ytc/AIdro_nU1bLokw7ikO-pkRrikJlgIlmSWCgdt0T2QnL-tR_2Mw=s88-c-k-c0x00ffffff-no-rj"
+          />
         </a>
         <div className="flex flex-col">
-          <a href={`/watch?v=${id}`} className="font-bold">
-            {title}
+          <a href={`/watch?v=${video.id}`} className="font-bold">
+            {video.snippet.title}
           </a>
-          <a href={`/@${channel.id}`} className="text-secondary-text text-sm">
-            {channel.name}
+          <a
+            href={`/@${video.snippet.channelId}`}
+            className="text-secondary-text text-sm"
+          >
+            {video.snippet.channelTitle}
           </a>
           <div className="text-secondary-text text-sm">
-            {VIEW_FROMATTER.format(views)} Views • {formatTimeAgo(postedAt)}
+            {VIEW_FROMATTER.format(parseInt(video.statistics.viewCount))} Views
+            • {formatTimeAgo(video.snippet.publishedAt)}
           </div>
         </div>
       </div>

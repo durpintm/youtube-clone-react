@@ -1,16 +1,40 @@
 import { PageHeader } from "./layouts/PageHeader";
 import { CategoryPills } from "./components/CategoryPills";
 import { categories } from "./data/home";
-import { useState } from "react";
-import { videos } from "./data/home";
+import { useEffect, useState } from "react";
 import { VideoGridItem } from "./components/VideoGridItem";
 import { Sidebar } from "./layouts/Sidebar";
 import { SidebarProvider } from "./contexts/SidebarContext";
 import store from "./utils/redux/store";
 import { Provider } from "react-redux";
+import { VideoGridItemProps } from "./Types/VideoGridItems";
+
+const { APP_GOOGLE_API_KEY, APP_YOUTUBE_VIDEOS_API } = import.meta.env;
+
+const videosApiUrl: string = APP_YOUTUBE_VIDEOS_API.replace(
+  "{APP_GOOGLE_API_KEY}",
+  APP_GOOGLE_API_KEY
+);
+// console.log(videosApiUrl);
 
 export default function App() {
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
+  const [videos, setVideos] = useState<VideoGridItemProps[]>([]);
+
+  useEffect(() => {
+    getVideos();
+  }, []);
+
+  const getVideos = async () => {
+    const data = await fetch(videosApiUrl);
+    const json = await data.json();
+    const yvideos = json.items as VideoGridItemProps[];
+    setVideos(yvideos);
+  };
+
+  console.log(videos[0]);
+
+  if (videos.length === 0) return;
 
   return (
     <Provider store={store}>
@@ -28,8 +52,8 @@ export default function App() {
                 />
               </div>
               <div className="grid gap-4 grid-cols-[repeat(auto-fill,minmax(300px,1fr))]">
-                {videos.map((video) => (
-                  <VideoGridItem key={video.id} {...video} />
+                {videos.map((video, index) => (
+                  <VideoGridItem key={index} {...video} />
                 ))}
               </div>
             </div>
