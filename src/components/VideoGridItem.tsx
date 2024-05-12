@@ -4,6 +4,8 @@ import { VideoGridItemProps } from "../types/props/VideoGridItemProps";
 import { formatTimeAgo } from "../utils/formatTimeAgo";
 const VIEW_FROMATTER = Intl.NumberFormat(undefined, { notation: "compact" });
 
+const { APP_YOUTUBE_URL } = import.meta.env;
+
 export function VideoGridItem(video: VideoGridItemProps) {
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -25,7 +27,10 @@ export function VideoGridItem(video: VideoGridItemProps) {
       onMouseEnter={() => setIsVideoPlaying(true)}
       onMouseLeave={() => setIsVideoPlaying(false)}
     >
-      <a href={`/watch?v=${video.id}`} className="relative aspect-video">
+      <a
+        href={`${APP_YOUTUBE_URL + video.id}`}
+        className="relative aspect-video"
+      >
         <img
           src={video.snippet.thumbnails.maxres.url}
           className={`block w-full h-full object-cover rounded-xl [border-radius] duration-200 ${
