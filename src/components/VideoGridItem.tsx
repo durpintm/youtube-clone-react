@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { formatISODuration } from "../utils/formatISODuration";
-import { VideoGridItemProps } from "../Types/VideoGridItems";
+import { VideoGridItemProps } from "../types/props/VideoGridItemProps";
 import { formatTimeAgo } from "../utils/formatTimeAgo";
 const VIEW_FROMATTER = Intl.NumberFormat(undefined, { notation: "compact" });
 

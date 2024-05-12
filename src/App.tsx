@@ -7,7 +7,7 @@ import { Sidebar } from "./layouts/Sidebar";
 import { SidebarProvider } from "./contexts/SidebarContext";
 import store from "./utils/redux/store";
 import { Provider } from "react-redux";
-import { VideoGridItemProps } from "./Types/VideoGridItems";
+import { VideoGridItemProps } from "./types/props/VideoGridItemProps";
 
 const { APP_GOOGLE_API_KEY, APP_YOUTUBE_VIDEOS_API } = import.meta.env;
 
@@ -15,7 +15,6 @@ const videosApiUrl: string = APP_YOUTUBE_VIDEOS_API.replace(
   "{APP_GOOGLE_API_KEY}",
   APP_GOOGLE_API_KEY
 );
-// console.log(videosApiUrl);
 
 export default function App() {
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
