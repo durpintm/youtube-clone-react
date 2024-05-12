@@ -11,7 +11,7 @@ export type VideoGridItemProps = {
         width: number;
         url: string;
       };
-      high: {
+      maxres: {
         height: number;
         width: number;
         url: string;

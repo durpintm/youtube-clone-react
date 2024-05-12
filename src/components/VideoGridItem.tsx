@@ -21,13 +21,13 @@ export function VideoGridItem(video: VideoGridItemProps) {
 
   return (
     <div
-      className="flex flex-col gap-2"
+      className="flex flex-col gap-4"
       onMouseEnter={() => setIsVideoPlaying(true)}
       onMouseLeave={() => setIsVideoPlaying(false)}
     >
       <a href={`/watch?v=${video.id}`} className="relative aspect-video">
         <img
-          src={video.snippet.thumbnails.high.url}
+          src={video.snippet.thumbnails.maxres.url}
           className={`block w-full h-full object-cover rounded-xl [border-radius] duration-200 ${
             isVideoPlaying ? "rounded-none" : "rounded-xl"
           }`}
@@ -49,7 +49,7 @@ export function VideoGridItem(video: VideoGridItemProps) {
       <div className="flex gap-2">
         <a href={`/@${video.snippet.channelId}`} className="flex-shrink-0">
           <img
-            className="w-12 h-12 rounded-full"
+            className="w-8 h-8 rounded-full"
             src="https://yt3.ggpht.com/ytc/AIdro_nU1bLokw7ikO-pkRrikJlgIlmSWCgdt0T2QnL-tR_2Mw=s88-c-k-c0x00ffffff-no-rj"
           />
         </a>
