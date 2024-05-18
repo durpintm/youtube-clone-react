@@ -31,7 +31,7 @@ export default function App() {
     setVideos(yvideos);
   };
 
-  console.log(videos[0]);
+  // console.log(videos[0]);
 
   if (videos.length === 0) return;
 

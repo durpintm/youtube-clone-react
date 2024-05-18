@@ -1,4 +1,3 @@
-import { useEffect, useRef, useState } from "react";
 import { formatISODuration } from "../utils/formatISODuration";
 import { VideoGridItemProps } from "../types/props/VideoGridItemProps";
 import { formatTimeAgo } from "../utils/formatTimeAgo";
@@ -7,49 +6,23 @@ const VIEW_FROMATTER = Intl.NumberFormat(undefined, { notation: "compact" });
 const { APP_YOUTUBE_URL } = import.meta.env;
 
 export function VideoGridItem(video: VideoGridItemProps) {
-  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  console.log(video.snippet.publishedAt);
-  useEffect(() => {
-    if (videoRef.current == null) return;
-    if (isVideoPlaying) {
-      videoRef.current.currentTime = 0;
-      videoRef.current.play();
-    } else {
-      videoRef.current.pause();
-    }
-  }, [isVideoPlaying]);
+  if (video.snippet.thumbnails.maxres === undefined) return;
 
   return (
-    <div
-      className="flex flex-col gap-4"
-      onMouseEnter={() => setIsVideoPlaying(true)}
-      onMouseLeave={() => setIsVideoPlaying(false)}
-    >
+    <div className="flex flex-col gap-4">
       <a
         href={`${APP_YOUTUBE_URL + video.id}`}
         className="relative aspect-video"
       >
         <img
-          src={video.snippet.thumbnails.maxres.url}
-          className={`block w-full h-full object-cover rounded-xl [border-radius] duration-200 ${
-            isVideoPlaying ? "rounded-none" : "rounded-xl"
-          }`}
+          src={video?.snippet?.thumbnails?.maxres?.url}
+          className={`block w-full h-full object-cover rounded-xl [border-radius] duration-200`}
           alt="Video"
         />
+
         <div className="absolute bottom-1 right-1 bg-secondary-dark text-secondary text-sm px-0.5 rounded">
           {formatISODuration(video.contentDetails.duration)}
         </div>
-        <video
-          ref={videoRef}
-          muted
-          playsInline
-          src=""
-          className={`block h-full object-cover absolute inset-0 transition-opacity duration-200 ${
-            isVideoPlaying ? "opacity-100  delay-200" : "opacity-0"
-          }`}
-        ></video>
       </a>
       <div className="flex gap-2">
         <a href={`/@${video.snippet.channelId}`} className="flex-shrink-0">
