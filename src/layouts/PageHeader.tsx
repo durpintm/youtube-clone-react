@@ -3,14 +3,6 @@ import { Button } from "../components/Button";
 import { useState } from "react";
 import { useSidebarContext } from "../contexts/SidebarContext";
 
-const { APP_YOUTUBE_API_KEY, APP_YOUTUBE_SEARCH_API } = import.meta.env;
-
-const apiUrl: string = APP_YOUTUBE_SEARCH_API.replace(
-  "{APP_YOUTUBE_API_KEY}",
-  APP_YOUTUBE_API_KEY
-);
-console.log(apiUrl);
-
 export function PageHeader() {
   const [showFullWidthSearch, setShowFullWidthSearch] = useState(false);
 
